@@ -11,8 +11,18 @@ repositories {
     mavenCentral()
 }
 tasks.register("objectMapperFindModules") {
-    ObjectMapper.findModules()
+    onlyIf {
+        ObjectMapper.findModules()
+        return@onlyIf true
+    }
 }
+
+tasks.register("objectMapperFindModulesSuccess") {
+    doFirst {
+        ObjectMapper.findModules()
+    }
+}
+
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
